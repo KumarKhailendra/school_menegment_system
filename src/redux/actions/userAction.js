@@ -1,5 +1,6 @@
 import { showFailure2Toaster, showFailureToaster } from "@/utils/config";
-import { getDataAPI } from "@/utils/fetchData";
+import { getDataAPI, putDataAPI } from "@/utils/fetchData";
+import { GLOBALTYPES } from "./globalTypes";
 
 
 export const fetchUsersByLevelRange = async (minLevel, maxLevel) => {
@@ -12,5 +13,36 @@ export const fetchUsersByLevelRange = async (minLevel, maxLevel) => {
     } catch (err) {
         showFailureToaster(err.response.data.msg)
         return [];
+    }
+}
+
+export const fetchStudentAttendance = async (standard, date) => {
+    try {
+        const res1 =  getDataAPI(`user/student/attendance?standard=${standard}&date=${date}`)
+        showFailure2Toaster(res1)
+        const res =  await res1;
+        dispatch({ 
+            type: GLOBALTYPES.STUDENT_ATTENDANCE, 
+            payload: {
+                st_attendance: res.data.attendanceData
+            } 
+        })
+    } catch (err) {
+        showFailureToaster(err.response.data.msg);
+    }
+}
+export const UpdateStudentAttendance = (data) => async (dispatch) => {
+    try {
+        const res1 =  putDataAPI(`user/student/attendance`, data)
+        showFailure2Toaster(res1)
+        const res =  await res1;
+        dispatch({ 
+            type: GLOBALTYPES.STUDENT_ATTENDANCE_UPDATE, 
+            payload: {
+                st_attendance: res.data.attendanceData
+            } 
+        })
+    } catch (err) {
+        showFailureToaster(err.response.data.msg);
     }
 }

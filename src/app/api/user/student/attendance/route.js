@@ -12,7 +12,7 @@ export async function GET(request) {
     if (!standard || !date) {
       return NextResponse.json({ msg: "Both standard and date are required parameters." }, { status: 400 })
     }
-
+    // E:\NumeryTechnology\task\school_menegment_project\src\app\api\user\student\attendance\route.js
     const attendanceData = await Users_k.aggregate([
       { $match: { standard, level: 10 } },
       {
@@ -40,7 +40,8 @@ export async function GET(request) {
           fname: 1,
           lname: 1,
           standard: 1,
-          attendanceStatus: 1
+          attendanceStatus: 1,
+          date: { $arrayElemAt: ["$attendanceInfo.date", 0] }
         }
       }
     ]);

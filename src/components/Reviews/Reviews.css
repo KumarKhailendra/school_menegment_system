@@ -1,0 +1,24 @@
+  
+  .reviews {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .review {
+    margin-bottom: 20px;
+  }
+  
+  .rating {
+    font-weight: bold;
+    color: #007bff; /* Blue color for rating */
+  }
+  
+  .review h3 {
+    margin-top: 0;
+  }
+  
+  .review p {
+    margin-bottom: 0;
+  }
+  

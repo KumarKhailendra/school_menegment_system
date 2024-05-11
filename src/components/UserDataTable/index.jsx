@@ -1,8 +1,7 @@
 import React from 'react';
-import './styles.css'; // Import CSS file for styling
+import './styles.css'; 
 
 const UserDataTable = ({ userData }) => {
-  console.log("userData>>>>>>>>>>>>",userData);
 
   return (
     <div className="table-container">

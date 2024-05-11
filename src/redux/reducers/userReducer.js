@@ -7,7 +7,9 @@ const userReducer = (state = initialState, action) => {
         case GLOBALTYPES.STUDENT_ATTENDANCE:
             return action.payload;
         case GLOBALTYPES.STUDENT_ATTENDANCE_UPDATE:
-            return state;
+            const newState = { ...state };
+            newState.st_attendance[action.payload.index].attendanceStatus = action.payload.status;
+            return newState;
         default:
             return state;
     }

@@ -16,7 +16,7 @@ export const fetchUsersByLevelRange = async (minLevel, maxLevel) => {
     }
 }
 
-export const fetchStudentAttendance = async (standard, date) => {
+export const fetchStudentAttendance = (standard, date) => async (dispatch) => {
     try {
         const res1 =  getDataAPI(`user/student/attendance?standard=${standard}&date=${date}`)
         showFailure2Toaster(res1)
@@ -31,18 +31,20 @@ export const fetchStudentAttendance = async (standard, date) => {
         showFailureToaster(err.response.data.msg);
     }
 }
-export const UpdateStudentAttendance = (data) => async (dispatch) => {
+export const UpdateStudentAttendance = (data, standard, date) => async (dispatch) => {
     try {
         const res1 =  putDataAPI(`user/student/attendance`, data)
         showFailure2Toaster(res1)
-        const res =  await res1;
+        const res2 =  getDataAPI(`user/student/attendance?standard=${standard}&date=${date}`)
+        showFailure2Toaster(res2)
+        const res =  await res2;
         dispatch({ 
-            type: GLOBALTYPES.STUDENT_ATTENDANCE_UPDATE, 
+            type: GLOBALTYPES.STUDENT_ATTENDANCE, 
             payload: {
                 st_attendance: res.data.attendanceData
             } 
         })
     } catch (err) {
-        showFailureToaster(err.response.data.msg);
+        showFailureToaster(err?.response?.data?.msg);
     }
 }

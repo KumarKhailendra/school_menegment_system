@@ -5,26 +5,32 @@ import DatePicker from './DatePicker';
 import ClassSelector from './ClassSelector';
 import AttendanceTable from './AttendanceTable';
 import './Attendance.css';
-import { fetchUsersByLevelRange } from '@/redux/actions/userAction';
+import { UpdateStudentAttendance, fetchStudentAttendance, fetchUsersByLevelRange } from '@/redux/actions/userAction';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 
 const AttendancePage = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const attendance = useAppSelector(state => state.user.st_attendance)
+  const [selectedDate, setSelectedDate] = useState(convert(new Date()));
   const [selectedClass, setSelectedClass] = useState('1');
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    fetchAttendanceData();
-  }, [selectedDate, selectedClass]);
+  const dispatch = useAppDispatch()
 
-  const fetchAttendanceData = async () => {
-    try {
-      const data = await fetchUsersByLevelRange(0,10);
-      setStudents(data);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
+  useEffect(() => {
+      dispatch(fetchStudentAttendance(selectedClass, selectedDate));
+  }, [dispatch, selectedClass, selectedDate]);
+
+  useEffect(() => {
+      setStudents(attendance? attendance : [])
+  }, [dispatch, attendance,]);
+
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -34,12 +40,8 @@ const AttendancePage = () => {
     setSelectedClass(cls);
   };
 
-  const handleCheckboxChange = async (studentId, status) => {
-    try {
-      
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  const handleCheckboxChange = async (data) => {
+    dispatch(UpdateStudentAttendance(data, selectedClass, selectedDate));
   };
 
   return (
@@ -51,7 +53,7 @@ const AttendancePage = () => {
       <div className="class-selector-container">
         <ClassSelector selectedClass={selectedClass} handleClassChange={handleClassChange} />
       </div>
-      <AttendanceTable students={students} handleCheckboxChange={handleCheckboxChange} />
+      <AttendanceTable students={students} handleCheckboxChange={handleCheckboxChange} selectedDate={selectedDate} />
     </div>
   );
 };

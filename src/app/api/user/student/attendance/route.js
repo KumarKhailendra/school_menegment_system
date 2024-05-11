@@ -1,5 +1,5 @@
 import { mongooseConnect } from "@/dbConfig/dbConfig";
-import Attendance from "@/models/attendanceModel";
+import Attendances from "@/models/attendanceModel";
 import Users_k from "@/models/userModel";
 import { NextResponse } from "next/server";
 
@@ -8,18 +8,38 @@ export async function GET(request) {
   try {
     const { searchParams } = request.nextUrl;
     const standard = searchParams.get("standard");
-    const date = searchParams.get("date");
-    if (!standard || !date) {
+    const dateString = searchParams.get("date");
+    if (!standard || !dateString) {
       return NextResponse.json({ msg: "Both standard and date are required parameters." }, { status: 400 })
     }
-    // E:\NumeryTechnology\task\school_menegment_project\src\app\api\user\student\attendance\route.js
+    const date = new Date(dateString);
+
+    // const queryDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const lookupAttendancePipeline = [
+      {
+        $match: { $expr: { $eq: ["$studentId", "$$studentId"] } }
+      },
+      {
+        $match: {
+          $expr: {
+            $eq: [{ $dateToString: { format: "%Y-%m-%d", date: "$date" } }, "$$date"]
+          }
+        }
+      }
+    ];
+
+    const defaultAttendance = {
+      attendanceStatus: "absent",
+      attendanceDate: ""
+    };
+
     const attendanceData = await Users_k.aggregate([
       { $match: { standard, level: 10 } },
       {
         $lookup: {
           from: "attendances",
-          localField: "_id",
-          foreignField: "studentId",
+          let: { studentId: "$_id", date: date.toISOString().slice(0, 10) },
+          pipeline: lookupAttendancePipeline,
           as: "attendanceInfo"
         }
       },
@@ -31,6 +51,13 @@ export async function GET(request) {
               then: "absent",
               else: { $arrayElemAt: ["$attendanceInfo.status", 0] }
             }
+          },
+          attendanceDate: {
+            $cond: {
+              if: { $eq: [{ $size: "$attendanceInfo" }, 0] },
+              then: null,
+              else: { $arrayElemAt: ["$attendanceInfo.date", 0] }
+            }
           }
         }
       },
@@ -41,11 +68,10 @@ export async function GET(request) {
           lname: 1,
           standard: 1,
           attendanceStatus: 1,
-          date: { $arrayElemAt: ["$attendanceInfo.date", 0] }
+          attendanceDate: 1
         }
       }
     ]);
-
     return NextResponse.json({
       msg: "Load Data Success!",
       attendanceData
@@ -61,13 +87,12 @@ export async function PUT(request) {
   try {
     const reqBody = await request.json();
     const { studentId, date, status } = reqBody;
-
     let updatedAttendance;
-    const existingAttendance = await Attendance.findOne({ studentId, date });
+    const existingAttendance = await Attendances.findOne({ studentId, date });
 
     if (existingAttendance) {
 
-      updatedAttendance = await Attendance.findOneAndUpdate(
+      updatedAttendance = await Attendances.findOneAndUpdate(
         { studentId, date },
         { status },
         { new: true } 
@@ -79,7 +104,7 @@ export async function PUT(request) {
       }, { status: 200 });
 
     } else {
-      const newAttendance = new Attendance({ studentId, date, status });
+      const newAttendance = new Attendances({ studentId, date, status });
 
       await newAttendance.save();
 

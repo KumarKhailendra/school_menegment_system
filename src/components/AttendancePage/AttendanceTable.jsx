@@ -1,7 +1,8 @@
-import React from 'react';
-import './Attendance.css';
+"use client";
+import React from "react";
+import "./Attendance.css";
 
-const AttendanceTable = ({ students, handleCheckboxChange }) => {
+const AttendanceTable = ({ students, handleCheckboxChange, selectedDate }) => {
   return (
     <table className="attendance-table">
       <thead>
@@ -14,27 +15,47 @@ const AttendanceTable = ({ students, handleCheckboxChange }) => {
         </tr>
       </thead>
       <tbody>
-        {students.map(student => (
-          <tr key={student._id}>
-            <td>{student.fname} {student.lname}</td>
-            <td>{student.standard}</td>
-            <td>{student.status}</td>
-            <td>{new Date(student.date).toLocaleDateString()}</td>
-            <td>
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={student.status === 'present'}
-                  onChange={() => handleCheckboxChange(student._id, student.status === 'present' ? 'absent' : 'present')}
-                />
-                <span className="checkbox-custom"></span>
-              </label>
-            </td>
-          </tr>
+        {students?.map((student, index) => (
+          <TableRow key={student._id} student={student} index={index} selectedDate={selectedDate} handleCheckboxChange={handleCheckboxChange} />
         ))}
       </tbody>
     </table>
   );
 };
+
+function TableRow({ student, index, selectedDate, handleCheckboxChange }) {
+
+  const handleStudaentData = () => {
+    const stObj = {
+      studentId: student._id,
+      date: selectedDate,
+      status: student.attendanceStatus === "present" ? "absent" : "present",
+    }
+    handleCheckboxChange(stObj, index)
+  };
+
+  return (
+    <tr key={student?._id}>
+      <td>
+        {student?.fname} {student?.lname}
+      </td>
+      <td>{student?.standard}</td>
+      <td>{student?.attendanceStatus}</td>
+      <td>{student?.attendanceDate? new Date(student?.attendanceDate).toLocaleDateString(): "---"}</td>
+      <td>
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            checked={student.attendanceStatus === "present"}
+            onChange={() =>
+              handleStudaentData()
+            }
+          />
+          <span className="checkbox-custom"></span>
+        </label>
+      </td>
+    </tr>
+  );
+}
 
 export default AttendanceTable;

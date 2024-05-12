@@ -14,7 +14,6 @@ export async function GET(request) {
     }
     const date = new Date(dateString);
 
-    // const queryDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     const lookupAttendancePipeline = [
       {
         $match: { $expr: { $eq: ["$studentId", "$$studentId"] } }

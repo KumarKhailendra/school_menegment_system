@@ -47,7 +47,7 @@
     height: 12px;
     background-color: #fff;
     border: 1px solid #ccc;
-    vertical-align: middle;
+    /* vertical-align: middle; */
   }
   
   .checkbox-label input[type="checkbox"] {

@@ -5,6 +5,8 @@ import { refreshToken } from '@/redux/actions/authAction';
 import UserDataTable from '@/components/UserDataTable';
 import { fetchUsersByLevelRange } from '@/redux/actions/userAction';
 import Loading from '../loading';
+import AdminSalary from '@/components/Salary/AdminSalary';
+import StaffSalary from '@/components/Salary/StaffSalary';
 
 function Staff() {
   const [userData, setUserData] = useState([])
@@ -21,16 +23,18 @@ function Staff() {
   }
 
   useEffect(() => {
+    // dispatch(refreshToken());
     fetchUserData();
   }, [dispatch]);
 
 
   return (
     <>
-      <h1>Staff Page</h1>
+      <h1>{auth?.user?.level === 100 ? "Mennege Your Staff Salaries" : "Your Salary Detaile"}</h1>
       <Suspense fallback={<Loading />}>
         {/* Pass userData to UserDataTable */}
-        <UserDataTable userData={userData}/>
+        {auth?.user?.level === 100 ? <AdminSalary /> : <StaffSalary />}
+        {/* <AdminSalary /> */}
       </Suspense>
     </>
   );

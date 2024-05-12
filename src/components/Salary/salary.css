@@ -1,0 +1,57 @@
+.admin-salary-container {
+    margin: 20px;
+}
+
+.salary-form-container {
+    margin-bottom: 20px;
+}
+
+.salary-list-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.salary-list-container th, .salary-list-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.salary-list-container th {
+    background-color: #25c32d;
+}
+
+.input-container {
+    margin-bottom: 10px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submit-button, .edit-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.submit-button:hover, .edit-button:hover {
+    background-color: #45a049;
+}

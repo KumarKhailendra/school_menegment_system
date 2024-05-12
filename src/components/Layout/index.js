@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
         {auth?.user?.level >= 50 && <Link href={"/staff"}>Staff</Link>}
         {auth?.user?.level >= 50 ? <Link href={"/student"}>Student</Link>: <></>}
         {auth?.user?.level < 51 || auth?.user?.level === 100? <Link href={"/attendance"}>Attendance</Link>: <></>}
-        {auth?.user?.level >= 50 || auth?.user?.level === 100? <Link href={"/"}>Salary</Link>: <></>}
+        {auth?.user?.level >= 50 || auth?.user?.level === 100? <Link href={"/salary"}>Salary</Link>: <></>}
         {auth?.user?.level === 100 && <Link href={"/"}>Services</Link>}
         {auth?.user?.level === 100 && <Link href={"/"}>Carrer</Link>}
         <Link href={"/reviews"}>Reviews</Link>

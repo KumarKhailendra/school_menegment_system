@@ -21,6 +21,8 @@ async function POST(request) {
         let newUser;
         if(accountType === "staff"){
             newUser = new Users_k({ fname, lname, username, email, password: passwordHash, accountType, standard, mobile, gender, level: 50 });
+        }else if(accountType === "parent"){
+            newUser = new Users_k({ fname, lname, username, email, password: passwordHash, accountType, standard, mobile, gender, level: 20  });
         }else{
             newUser = new Users_k({ fname, lname, username, email, password: passwordHash, accountType, standard, mobile, gender });
         }

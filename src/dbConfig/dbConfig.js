@@ -4,7 +4,7 @@ export async function mongooseConnect(){
     if(mongoose.connection.readyState === 1){
         return mongoose.connection.asPromise();
     }else{
-        const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/new_project";
+        const uri = process.env.MONGO_URI || "mongodb://sms-nosql-db/school_menegment_system";
 
         try {
             console.log('MongoDB connected successfully');
@@ -17,7 +17,7 @@ export async function mongooseConnect(){
 
         } catch (error) {
             console.error('MongoDB connection error:', error);
-            process.exit(1); // Exit the Node.js process with an error
+            process.exit(1);
         }
     }
 }

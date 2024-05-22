@@ -24,13 +24,16 @@ const Layout = ({ children }) => {
         {auth?.user?.level === 100 && <Link href={"/admin"}>Admin</Link>}
         {auth?.user?.level >= 50 && <Link href={"/staff"}>Staff</Link>}
         {auth?.user?.level >= 50 ? <Link href={"/student"}>Student</Link>: <></>}
-        {auth?.user?.level < 51 || auth?.user?.level === 100? <Link href={"/attendance"}>Attendance</Link>: <></>}
-        {auth?.user?.level >= 50 || auth?.user?.level === 100? <Link href={"/salary"}>Salary</Link>: <></>}
-        {auth?.user?.level === 100 && <Link href={"/"}>Services</Link>}
-        {auth?.user?.level === 100 && <Link href={"/"}>Carrer</Link>}
+        {auth?.user?.level >= 10 && auth?.user?.level != 20 || auth?.user?.level === 100? <Link href={"/attendance"}>Attendance</Link>: <></>}
+        {auth?.user?.level >= 50 ? <Link href={"/salary"}>Salary</Link>: <></>}
+        {auth?.user?.level === 100 && <Link href={"/services"}>Services</Link>}
+        {auth?.user?.level >= 20 && <Link href={"/carrer"}>Carrer</Link>}
+        {auth?.user?.level === 20 && <Link href={"/schools"}>Schools</Link>}
+        {auth?.user?.level === 20 && <Link href={"/university"}>Colleges, University</Link>}
+        {auth?.user?.level === 20 && <Link href={"/rewards"}>Awards & Certifications</Link>}
         <Link href={"/reviews"}>Reviews</Link>
-        <Link href={"/query"}>Query</Link>
-        {auth?.user?.level === 100 && <Link href={"/"}>settings</Link>}
+        <Link href={"/query"}>{auth?.user?.level === 20? "Support": "Query"}</Link>
+        {auth?.user?.level === 100 && <Link href={"/settings"}>Settings</Link>}
         <button type="button" onClick={() => dispatch(logout())}>
           logout
         </button>

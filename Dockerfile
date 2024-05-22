@@ -1,0 +1,25 @@
+ARG NODE_VERSION=20.9.0
+
+FROM node:${NODE_VERSION}
+
+WORKDIR /app/sms
+
+COPY package*.json .
+
+COPY . .
+
+RUN npm install
+# RUN npm run build
+
+ENV TOKEN_SECRET="TOKEN_SECRET"
+ENV REFRESH_TOKEN_SECRET="REFRESH_TOKEN_SECRET"
+ENV ACCESS_TOKEN_SECRET="ACCESS_TOKEN_SECRET"
+ENV SMTPUSER="learntimer@gmail.com"
+ENV SMTPPASS="jlfozguqazeyzmbi"
+ENV HOSTSERVER="smtp.gmail.com"
+ENV HOSTPORT=587
+ENV PORT=5500
+
+EXPOSE 5500
+
+CMD ["npm", "run", "dev"]

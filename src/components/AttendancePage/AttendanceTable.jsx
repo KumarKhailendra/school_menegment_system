@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import "./Attendance.css";
+import { useAppSelector } from "@/redux/hooks";
 
 const AttendanceTable = ({ students, handleCheckboxChange, selectedDate }) => {
   return (
@@ -24,6 +25,7 @@ const AttendanceTable = ({ students, handleCheckboxChange, selectedDate }) => {
 };
 
 function TableRow({ student, index, selectedDate, handleCheckboxChange }) {
+  const { auth } = useAppSelector(state => state)
 
   const handleStudaentData = () => {
     const stObj = {
@@ -50,6 +52,7 @@ function TableRow({ student, index, selectedDate, handleCheckboxChange }) {
             onChange={() =>
               handleStudaentData()
             }
+            disabled={auth?.user?.level < 50? true: false}
           />
           <span className="checkbox-custom"></span>
         </label>

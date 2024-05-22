@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./salary.css";
@@ -9,12 +10,12 @@ const AdminSalary = () => {
   const [newSalary, setNewSalary] = useState({ staffId: "", amount: 0 });
   const [isUpdating, setIsUpdating] = useState(false);
   const [selectedSalaryId, setSelectedSalaryId] = useState(null);
-  const [userData, setUserData] = useState([])
+  const [userData, setUserData] = useState([]);
   const dispatch = useAppDispatch();
 
-  async function fetchUserData(){
+  async function fetchUserData() {
     try {
-      const data = await fetchUsersByLevelRange(11,50);
+      const data = await fetchUsersByLevelRange(11, 50);
       setUserData(data);
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -64,7 +65,6 @@ const AdminSalary = () => {
     setSelectedSalaryId(salary._id);
     setIsUpdating(true);
   };
-  console.log(userData);
 
   return (
     <div className="admin-salary-container">
@@ -81,11 +81,11 @@ const AdminSalary = () => {
               required
             >
               <option value="">Select Staff ID</option>
-              {
-                userData?.map((staff, index)=>(
-                    <option value={staff._id} key={index}>Staff ID {staff._id}</option> 
-                ))
-              }
+              {userData?.map((staff, index) => (
+                <option value={staff._id} key={index}>
+                  Staff ID {staff._id}
+                </option>
+              ))}
             </select>
           </div>
 

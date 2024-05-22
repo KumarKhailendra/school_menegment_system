@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
         {auth?.user?.level < 50 && auth?.user?.level > 10 && <PerentHome />}
-        {auth?.user?.level < 50 && auth?.user?.level > 20 && <h3>hello Student</h3>}
+        {auth?.user?.level === 10 && <h3>hello Student</h3>}
         {auth?.user?.level < 100 && auth?.user?.level >= 50 && <h3>hello teacher staff</h3>}
         {auth?.user?.level === 100 && <h3>hello admin</h3>}
     </>

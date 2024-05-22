@@ -1,0 +1,36 @@
+version: "3"
+services:
+  # MongoDB service
+  sms-nosql-db:
+    image: mongo  # Use the official MongoDB image from Docker Hub
+    ports:
+      - "27018:27017"  # Map host port 27017 to container port 27017 for MongoDB
+    container_name: sms-nosql-db  # Assign a name to the MongoDB container
+    volumes:
+      - ./db/:/data/db  # Mount a volume for persistent data storage
+    networks:
+      - school-menegment-system  # Connect the service to the custom bridge network
+
+  # Next.js server service
+  client-server:
+    build:
+      dockerfile: Dockerfile  # Specify the Dockerfile for building the Next.js server image
+      context: .  # Use the current directory as the build context
+    container_name: client-server  # Assign a name to the Next.js server container
+    ports:
+      - "5500:5500"  # Map host port 5500 to container port 5500 for the Next.js server
+    restart: always  # Always restart the container if it stops
+    depends_on:
+      - "sms-nosql-db"  # Ensure the MongoDB service is started before the Next.js server
+    networks:
+      - school-menegment-system  # Connect the service to the custom bridge network
+    volumes:
+      - .:/app/sms
+      - /app/sms/node_modules
+    env_file:
+      - ./.env.dev
+
+# Define custom networks
+networks:
+  school-menegment-system:
+    driver: bridge  # Use the bridge network driver for communication between services

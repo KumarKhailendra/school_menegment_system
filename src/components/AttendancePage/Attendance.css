@@ -17,18 +17,31 @@
 .attendance-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 25px 0;
+    font-size: 0.9rem;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+  }
+.attendance-table thead tr{
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: 600;
   }
   
   .attendance-table th,
   .attendance-table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
+    padding: 12px 15px;
   }
   
-  .attendance-table th {
-    background-color: #22b148;
+  .attendance-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  .attendance-table tbody tr:nth-of-type(even) {
+    border-bottom: 1px solid #f3f3f3;
+  }
+  .attendance-table tbody tr:last-of-type(even) {
+    border-bottom: 1px solid #009879;
   }
   
   .checkbox-label {
@@ -47,7 +60,6 @@
     height: 12px;
     background-color: #fff;
     border: 1px solid #ccc;
-    /* vertical-align: middle; */
   }
   
   .checkbox-label input[type="checkbox"] {

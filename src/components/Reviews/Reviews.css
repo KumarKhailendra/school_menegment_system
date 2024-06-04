@@ -1,24 +1,52 @@
-  
-  .reviews {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
-  }
-  
-  .review {
-    margin-bottom: 20px;
-  }
-  
-  .rating {
-    font-weight: bold;
-    color: #007bff; /* Blue color for rating */
-  }
-  
-  .review h3 {
-    margin-top: 0;
-  }
-  
-  .review p {
-    margin-bottom: 0;
-  }
-  
+/* Reviews.css */
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.reviews h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.review {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.review .author {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #0070f3;
+}
+
+.review .rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.review .rating span {
+  margin-left: 5px;
+  font-size: 1.2rem;
+  color: #ffbf00;
+}
+
+.review .comment {
+  font-size: 1rem;
+  color: #555;
+}

@@ -2,7 +2,6 @@ import React from 'react';
 import './Reviews.css'; 
 import Review from './Review';
 
-
 const reviews = [
   {
     id: 1,
@@ -23,12 +22,11 @@ const ReviewsUser = () => {
   return (
     <div className="reviews">
       <h2>Customer Reviews</h2>
-      {reviews.map(review => (
+      {reviews.map((review) => (
         <Review key={review.id} review={review} />
       ))}
     </div>
   );
 };
-
 
 export default ReviewsUser;

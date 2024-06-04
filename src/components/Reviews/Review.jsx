@@ -1,13 +1,18 @@
-import React from 'react'
+import React from 'react';
+import './Reviews.css';
 
 const Review = ({ review }) => {
-    return (
-      <div className="review">
-        <h3>{review.author}</h3>
-        <div className="rating">Rating: {review.rating}/5</div>
-        <p>{review.comment}</p>
-      </div>
-    );
-  };
+  const { author, rating, comment } = review;
 
-export default Review
+  return (
+    <div className="review">
+      <div className="author">{author}</div>
+      <div className="rating">
+        {'⭐'.repeat(rating)}<span>({rating})</span>
+      </div>
+      <div className="comment">{comment}</div>
+    </div>
+  );
+};
+
+export default Review;

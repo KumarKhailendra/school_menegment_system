@@ -9,17 +9,9 @@ COPY package*.json .
 COPY . .
 
 RUN npm install
-# RUN npm run build
 
-ENV TOKEN_SECRET="TOKEN_SECRET"
-ENV REFRESH_TOKEN_SECRET="REFRESH_TOKEN_SECRET"
-ENV ACCESS_TOKEN_SECRET="ACCESS_TOKEN_SECRET"
-ENV SMTPUSER="learntimer@gmail.com"
-ENV SMTPPASS="jlfozguqazeyzmbi"
-ENV HOSTSERVER="smtp.gmail.com"
-ENV HOSTPORT=587
-ENV PORT=5500
+RUN npm run build
 
 EXPOSE 5500
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
